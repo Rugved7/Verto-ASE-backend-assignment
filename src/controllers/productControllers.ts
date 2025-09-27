@@ -93,7 +93,7 @@ export const deleteProduct = async (req: Request, res: Response) : Promise<void>
             return
         }
 
-        res.status(200).json({message: "Product deleted successfully"})
+        res.status(200).json({message: "Product deleted Successfully"})
     } catch (error) {
         res.status(500).json({error: "Failed to delete product"})
     }
