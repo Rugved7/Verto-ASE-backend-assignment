@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Product, IProduct } from "../models/Product";
+import { error } from "console";
 
 // Get All Products 
 export const getAllProducts = async (req: Request, res:Response) : Promise<void> => {
@@ -50,5 +51,50 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
         res.status(201).json(savedProduct)
     } catch (error) {
         res.status(500).json({error: 'Failed to create product'})
+    }
+}
+
+// Update product
+export const updateProduct = async (req: Request, res: Response) : Promise<void> => {
+    try {
+        const {name, description, stock_quantity, low_stock_threshold} = req.body
+
+        if(stock_quantity !== undefined && stock_quantity < 0){
+            res.status(400).json({error: "stock quantity can't be negative"})
+        }
+
+        const updatedProduct = await Product.findByIdAndUpdate(
+            req.params.id, {
+                name, 
+                description, 
+                stock_quantity, 
+                low_stock_threshold, 
+                updatedAt: new Date()
+            }, {new:true, runValidators: true})
+
+            if(!updatedProduct){
+                res.status(404).json({error: "Product not found"})
+                return 
+            }
+
+            res.status(200).json(updatedProduct)
+    } catch (error) {
+        res.status(500).json({error: "Failed to update Product"})
+    }
+} 
+
+// Delete Product 
+export const deleteProduct = async (req: Request, res: Response) : Promise<void> => {
+    try {
+        const deletedProduct = await Product.findByIdAndDelete(req.params.id)
+
+        if(!deletedProduct){
+            res.status(404).json({error: "Product not found"})
+            return
+        }
+
+        res.status(200).json({message: "Product deleted successfully"})
+    } catch (error) {
+        res.status(500).json({error: "Failed to delete product"})
     }
 }

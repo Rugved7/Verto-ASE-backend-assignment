@@ -1,5 +1,5 @@
 import {Router} from "express"
-import {getAllProducts, getProductById, createProduct} from "../controllers/productControllers"
+import {getAllProducts, getProductById, createProduct, updateProduct, deleteProduct} from "../controllers/productControllers"
 
 const router = Router()
 
@@ -7,5 +7,7 @@ const router = Router()
 router.get('/', getAllProducts)
 router.get('/:id', getProductById)
 router.post('/', createProduct)
+router.put('/:id', updateProduct)
+router.delete('/:id', deleteProduct)
 
 export default router
