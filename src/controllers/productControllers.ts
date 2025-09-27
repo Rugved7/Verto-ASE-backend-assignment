@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Product, IProduct } from "../models/Product";
 
+// Get All Products 
 export const getAllProducts = async (req: Request, res:Response) : Promise<void> => {
     try {
         const products = await Product.find()
@@ -10,7 +11,7 @@ export const getAllProducts = async (req: Request, res:Response) : Promise<void>
     }
 }
 
-
+// Get a product by its id
 export const getProductById = async (req: Request, res: Response) : Promise<void> => {
     try {
         const product = await Product.findById(req.params.id)
@@ -24,6 +25,7 @@ export const getProductById = async (req: Request, res: Response) : Promise<void
     }
 }
 
+// Create a Product 
 export const createProduct = async (req: Request, res: Response): Promise<void> => {
     try {
         const {name, description, stock_quantity, low_stock_threshold } = req.body
