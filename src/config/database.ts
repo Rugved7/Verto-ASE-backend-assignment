@@ -1,20 +1,14 @@
-import { Pool } from "pg";
+import mongoose from "mongoose";
 import dotenv from "dotenv"
 
 dotenv.config()
 
-export const pool = new Pool({
-    connectionString: process.env.DATABASE_URL, 
-    ssl: true
-})
-
-
-export const connect = async () => {
+export const connect = async(): Promise<void> => {
     try {
-        const client = await pool.connect()
+        await mongoose.connect(process.env.MONGO_URI!)
         console.log("Database connected");
-        client.release()
     } catch (error) {
-        console.log("Error conneccting database");
+        console.log("MongoDB connection Error");
+        process.exit(1)
     }
 }
