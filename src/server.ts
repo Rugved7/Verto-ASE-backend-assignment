@@ -18,7 +18,7 @@ connect()
 
 // API Routes
 app.use('/api/v1/products', productRoutes)
-app.use('/api/v1/products', inventoryRoutes)
+app.use('/api/v1/stocks', inventoryRoutes)
 
 app.get('/api/v1/health', (req,res) => {
     res.status(200).json({message: "Inventory API is running !"})
