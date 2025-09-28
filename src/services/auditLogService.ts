@@ -1,4 +1,5 @@
 import { AuditLog } from "../models/AuditLog";
+import { Model, Types } from "mongoose";
 
 export class AuditLogService {
   static async logAction(
@@ -25,8 +26,19 @@ export class AuditLogService {
   }
 
   static async getProductAuditLogs(product_id: string): Promise<any[]> {
-    return await AuditLog.find({ product_id })
-      .sort({ timestamp: -1 })
-      .populate("product_id", "name");
+    try {
+      console.log('Fetching audit logs for product:', product_id);
+      
+      const auditLogs = await AuditLog.find({ product_id })
+        .sort({ timestamp: -1 })
+        .lean(); // Use lean() for better performance
+      
+      console.log('Found audit logs:', auditLogs.length);
+      
+      return auditLogs;
+    } catch (error) {
+      console.error('Failed to fetch audit logs:', error);
+      return [];
+    }
   }
 }
