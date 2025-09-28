@@ -131,6 +131,7 @@ export const deleteProduct = async (req: Request, res: Response): Promise<void> 
     }
 }
 
+// get products with low stock threshold
 export const getLowStockProducts = async (req: Request, res: Response): Promise<void> => {
     try {
         const lowStockProducts = await Product.aggregate([

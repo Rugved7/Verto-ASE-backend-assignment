@@ -8,9 +8,7 @@ const router = Router()
 
 // Product CRUD Routes
 router.get('/', getAllProducts)
-
-// getlowThreshold route
-router.get('/low-stock', getLowStockProducts)
+router.get('/low-stock', getLowStockProducts) // getlowThreshold route
 router.get('/:id', getProductById)
 router.post('/', createProduct)
 router.put('/:id', updateProduct)
