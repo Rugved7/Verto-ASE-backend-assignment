@@ -23,8 +23,6 @@ A **production-ready**, scalable backend API for comprehensive inventory managem
 - [🌍 Environment Configuration](#-environment-configuration)
 - [🔒 Security Implementation](#-security-implementation)
 - [🎯 Architecture Decisions](#-architecture-decisions)
-- [🚀 Production Deployment](#-production-deployment)
-- [📈 Performance & Monitoring](#-performance--monitoring)
 
 ## 🚀 Features
 
@@ -87,7 +85,6 @@ A **production-ready**, scalable backend API for comprehensive inventory managem
 | **Code Quality** | ESLint + Prettier | Code linting and formatting |
 | **Environment** | dotenv | Environment variable management |
 | **Validation** | express-validator | Request validation middleware |
-| **Documentation** | Swagger/OpenAPI | API documentation generation |
 
 ## 📋 Prerequisites
 
@@ -107,7 +104,7 @@ git clone https://github.com/Rugved7/Verto-ASE-backend-assignment.git
 cd Verto-ASE-backend-assignment
 
 # Install dependencies with clean installation
-npm ci
+npm install
 ```
 
 ### 🛠 2. Environment Configuration
@@ -139,7 +136,7 @@ npm run dev
 npm run build && npm start
 
 # Health check
-curl http://localhost:3000/health
+http://localhost:3000/health
 ```
 
 ✅ **Success**: Server running on `http://localhost:3000`
@@ -173,11 +170,11 @@ curl http://localhost:3000/health
 ### 💡 API Usage Examples
 
 #### Creating a Product
-```bash
-curl -X POST http://localhost:3000/api/v1/products 
-  -H "Content-Type: application/json" 
-  -H "Accept: application/json" 
-  -d '{
+```
+ POST http://localhost:3000/api/v1/products 
+   "Content-Type: application/json" 
+   "Accept: application/json" 
+   '{
     "name": "Premium Wireless Headphones",
     "description": "Noise-canceling Bluetooth headphones with 30-hour battery life",
     "stock_quantity": 150,
@@ -186,16 +183,16 @@ curl -X POST http://localhost:3000/api/v1/products
 ```
 
 #### Stock Management Operations
-```bash
+```
 # Increase inventory
-curl -X POST http://localhost:3000/api/v1/stocks/[product-id]/increase 
-  -H "Content-Type: application/json" 
-  -d '{"quantity": 50}'
+  POST http://localhost:3000/api/v1/stocks/[product-id]/increase 
+  "Content-Type: application/json" 
+    '{"quantity": 50}'
 
 # Decrease inventory  
-curl -X POST http://localhost:3000/api/v1/stocks/[product-id]/decrease 
-  -H "Content-Type: application/json" 
-  -d '{"quantity": 10}'
+ POST http://localhost:3000/api/v1/stocks/[product-id]/decrease 
+  "Content-Type: application/json" 
+  '{"quantity": 10}'
 ```
 
 ## 📊 Data Models
