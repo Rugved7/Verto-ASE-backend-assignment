@@ -1,9 +1,12 @@
 import express from "express"
 import cors from "cors"
 import dotenv from "dotenv"
+
 import { connect } from "./config/database"
+
 import productRoutes from "./routes/productRoutes"
 import inventoryRoutes from "./routes/inventoryRoutes"
+import auditRoutes from "./routes/auditRoutes"
 
 dotenv.config();
 
@@ -19,6 +22,7 @@ connect()
 // API Routes
 app.use('/api/v1/products', productRoutes)
 app.use('/api/v1/stocks', inventoryRoutes)
+app.use('/api/v1/audit-logs', auditRoutes)
 
 app.get('/api/v1/health', (req,res) => {
     res.status(200).json({message: "Inventory API is running !"})

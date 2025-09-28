@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { increaseStock, decreaseStock } from '../controllers/inventoryController';
+import { increaseStock, decreaseStock } from '../controllers/inventoryControllers';
 
 const router = Router();
 
