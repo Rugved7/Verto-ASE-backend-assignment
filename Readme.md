@@ -12,17 +12,19 @@ A **production-ready**, scalable backend API for comprehensive inventory managem
 
 ## 📋 Table of Contents
 
-- [🚀 Features](#-features)
-- [🏗 System Architecture](#-system-architecture)
-- [🛠 Technology Stack](#-technology-stack)
-- [📋 Prerequisites](#-prerequisites)
-- [⚡ Quick Start Guide](#-quick-start-guide)
-- [🔗 API Documentation](#-api-documentation)
-- [📊 Data Models](#-data-models)
-- [🧪 Testing Strategy](#-testing-strategy)
-- [🌍 Environment Configuration](#-environment-configuration)
-- [🔒 Security Implementation](#-security-implementation)
-- [🎯 Architecture Decisions](#-architecture-decisions)
+- [Features](#-features)
+- [System Architecture](#-system-architecture)
+- [Tech Stack](#-tech-stack)
+- [Prerequisites](#-prerequisites)
+- [Installation & Setup](#-installation--setup)
+- [API Endpoints](#-api-endpoints)
+- [Data Models](#-data-models)
+- [Testing](#-testing)
+- [Project Structure](#-project-structure)
+- [Environment Variables](#-environment-variables)
+- [Security Features](#-security-features)
+- [Contributing](#-contributing)
+- [License](#-license)
 
 ## 🚀 Features
 
@@ -254,26 +256,57 @@ npm run test:coverage
 
 # Continuous testing during development
 npm run test:watch
-
-# Integration tests only
-npm run test:integration
 ```
 
-### Test Categories & Coverage
+### Test Coverage
 
-| Test Type | Coverage | Purpose |
-|-----------|----------|---------|
-| **Unit Tests** | Controllers, Services, Models | Individual component functionality |
-| **Integration Tests** | API Endpoints, Database | End-to-end request/response cycles |
-| **Validation Tests** | Input Sanitization | Security and data integrity |
-| **Error Handling** | Exception Scenarios | Graceful failure management |
-| **Edge Cases** | Boundary Conditions | System resilience testing |
-| **Performance Tests** | Load & Stress | Scalability validation |
+The test suite covers:
+- ✅ All CRUD operations
+- ✅ Stock increase/decrease operations  
+- ✅ Input validation
+- ✅ Error handling scenarios
+- ✅ Audit log creation
+- ✅ Low stock detection
+- ✅ Edge cases and boundary conditions
 
+## 📁 Project Structure
 
-## 🌍 Environment Configuration
+```
+inventory-management-api/
+├── src/
+│   ├── config/             # Configuration files
+│   │   ├── database.ts     # MongoDB connection
+│   │   └── environment.ts  # Environment variables
+│   ├── controllers/        # Request handlers
+│   │   ├── productController.ts
+│   │   └── stockController.ts
+│   ├── models/            # Database schemas
+│   │   ├── Product.ts
+│   │   └── AuditLog.ts
+│   ├── routes/            # API route definitions
+│   │   ├── productRoutes.ts
+│   │   └── stockRoutes.ts
+│   ├── services/          # Business logic layer
+│   │   ├── productService.ts
+│   │   ├── stockService.ts
+│   │   └── auditService.ts
+│   ├── middleware/        # Custom middleware
+│   │   ├── validation.ts
+│   │   └── errorHandler.ts
+│   ├── utils/            # Utility functions
+│   │   └── logger.ts
+│   └── server.ts         # Application entry point
+├── tests/                # Test files
+│   ├── integration/      # Integration tests
+│   └── unit/            # Unit tests
+├── .env                 # Environment variables
+├── .gitignore          # Git ignore file
+├── package.json        # Dependencies and scripts
+├── tsconfig.json       # TypeScript configuration
+└── README.md          # This file
+```
 
-### Configuration Variables
+## 🌍 Environment Variables
 
 | Variable | Description | Default | Environment | Required |
 |----------|-------------|---------|-------------|----------|
