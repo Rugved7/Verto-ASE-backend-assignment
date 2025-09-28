@@ -18,6 +18,7 @@ A robust, scalable backend API for tracking products and managing inventory in a
 - [API Endpoints](#-api-endpoints)
 - [Data Models](#-data-models)
 - [Testing](#-testing)
+- [Project Structure](#-project-structure)
 - [Environment Variables](#-environment-variables)
 - [Security Features](#-security-features)
 - [Contributing](#-contributing)
@@ -100,15 +101,7 @@ cd inventory-management-api
 npm install
 ```
 
-### 3. MongoDB Atlas Setup
-
-1. **Create Cluster**: Sign up and create a cluster in [MongoDB Atlas](https://cloud.mongodb.com/)
-2. **Database User**: Create a database user with read/write permissions
-3. **Network Access**: Add your IP address to the whitelist
-4. **Connection String**: Copy the connection string and update the `.env` file
-5. **Replace Variables**: Update `<username>`, `<password>`, and `<cluster>` in your connection string
-
-### 4. Environment Configuration
+### 3. Environment Configuration
 
 Create a `.env` file in the root directory:
 
@@ -121,6 +114,13 @@ PORT=3000
 NODE_ENV=development
 ```
 
+### 4. MongoDB Atlas Setup
+
+1. **Create Cluster**: Sign up and create a cluster in [MongoDB Atlas](https://cloud.mongodb.com/)
+2. **Database User**: Create a database user with read/write permissions
+3. **Network Access**: Add your IP address to the whitelist
+4. **Connection String**: Copy the connection string and update the `.env` file
+5. **Replace Variables**: Update `<username>`, `<password>`, and `<cluster>` in your connection string
 
 ### 5. Start the Server
 
@@ -259,6 +259,42 @@ The test suite covers:
 - ✅ Low stock detection
 - ✅ Edge cases and boundary conditions
 
+## 📁 Project Structure
+
+```
+inventory-management-api/
+├── src/
+│   ├── config/             # Configuration files
+│   │   ├── database.ts     # MongoDB connection
+│   │   └── environment.ts  # Environment variables
+│   ├── controllers/        # Request handlers
+│   │   ├── productController.ts
+│   │   └── stockController.ts
+│   ├── models/            # Database schemas
+│   │   ├── Product.ts
+│   │   └── AuditLog.ts
+│   ├── routes/            # API route definitions
+│   │   ├── productRoutes.ts
+│   │   └── stockRoutes.ts
+│   ├── services/          # Business logic layer
+│   │   ├── productService.ts
+│   │   ├── stockService.ts
+│   │   └── auditService.ts
+│   ├── middleware/        # Custom middleware
+│   │   ├── validation.ts
+│   │   └── errorHandler.ts
+│   ├── utils/            # Utility functions
+│   │   └── logger.ts
+│   └── server.ts         # Application entry point
+├── tests/                # Test files
+│   ├── integration/      # Integration tests
+│   └── unit/            # Unit tests
+├── .env                 # Environment variables
+├── .gitignore          # Git ignore file
+├── package.json        # Dependencies and scripts
+├── tsconfig.json       # TypeScript configuration
+└── README.md          # This file
+```
 
 ## 🌍 Environment Variables
 
@@ -292,5 +328,162 @@ NODE_ENV=development
 ✅ Error handling without information leakage  
 ✅ Secure MongoDB queries  
 ✅ Environment variable protection  
-✅ TypeScript for compile-time safety  
+✅ TypeScript for compile-time safety
+
+## 🎯 Assumptions & Design Choices
+
+### Key Assumptions Made
+
+1. **Single Warehouse Operations**: The system assumes operations within a single warehouse environment
+2. **Positive Stock Values**: Stock quantities cannot go below zero (business rule enforcement)
+3. **Unique Product Names**: Product names are assumed to be unique identifiers within the system
+4. **Immediate Stock Updates**: All stock changes are processed immediately without batch operations
+5. **Simple User Model**: No user authentication/authorization implemented (can be added later)
+6. **MongoDB Atlas Usage**: Cloud database preferred over local MongoDB for scalability
+
+### Design Decisions & Rationale
+
+#### **1. Database Choice: MongoDB**
+- **Why**: Flexible schema for evolving product attributes
+- **Benefit**: Easy horizontal scaling and JSON-like document structure
+- **Trade-off**: Less strict ACID properties vs. relational databases
+
+#### **2. TypeScript Implementation**
+- **Why**: Enhanced code quality and developer experience
+- **Benefit**: Compile-time error detection and better IDE support
+- **Trade-off**: Additional compilation step vs. direct JavaScript
+
+#### **3. Separate Audit Logging**
+- **Why**: Maintain complete history without affecting main product data
+- **Benefit**: Regulatory compliance and debugging capabilities
+- **Trade-off**: Additional storage space vs. simplified data model
+
+#### **4. RESTful API Design**
+- **Why**: Industry standard, predictable endpoints
+- **Benefit**: Easy integration with frontend applications
+- **Trade-off**: Multiple HTTP requests vs. GraphQL single endpoint
+
+#### **5. Layered Architecture (Routes → Controllers → Services → Models)**
+- **Why**: Separation of concerns and maintainability
+- **Benefit**: Easy testing, debugging, and feature additions
+- **Trade-off**: More files and complexity vs. monolithic structure
+
+#### **6. Stock Threshold-Based Alerts**
+- **Why**: Proactive inventory management
+- **Benefit**: Prevents stockouts and improves planning
+- **Trade-off**: Additional computation vs. reactive management
+
+#### **7. Comprehensive Error Handling**
+- **Why**: Better debugging and user experience
+- **Benefit**: Clear error messages and proper HTTP status codes
+- **Trade-off**: More code complexity vs. generic error responses
+
+### Future Enhancement Considerations
+
+- **Authentication & Authorization**: JWT-based user management
+- **Caching Layer**: Redis for frequently accessed data
+- **Real-time Updates**: WebSocket implementation for live inventory updates
+- **Batch Operations**: Support for bulk stock updates
+- **Multi-warehouse Support**: Extended system for multiple locations
+
+## 🎯 Assumptions & Design Choices
+
+### Key Assumptions Made
+
+1. **Single Warehouse Operations**: The system assumes operations within a single warehouse environment
+2. **Positive Stock Values**: Stock quantities cannot go below zero (business rule enforcement)
+3. **Unique Product Names**: Product names are assumed to be unique identifiers within the system
+4. **Immediate Stock Updates**: All stock changes are processed immediately without batch operations
+5. **Simple User Model**: No user authentication/authorization implemented (can be added later)
+6. **MongoDB Atlas Usage**: Cloud database preferred over local MongoDB for scalability
+
+### Design Decisions & Rationale
+
+#### **1. Database Choice: MongoDB**
+- **Why**: Flexible schema for evolving product attributes
+- **Benefit**: Easy horizontal scaling and JSON-like document structure
+- **Trade-off**: Less strict ACID properties vs. relational databases
+
+#### **2. TypeScript Implementation**
+- **Why**: Enhanced code quality and developer experience
+- **Benefit**: Compile-time error detection and better IDE support
+- **Trade-off**: Additional compilation step vs. direct JavaScript
+
+#### **3. Separate Audit Logging**
+- **Why**: Maintain complete history without affecting main product data
+- **Benefit**: Regulatory compliance and debugging capabilities
+- **Trade-off**: Additional storage space vs. simplified data model
+
+#### **4. RESTful API Design**
+- **Why**: Industry standard, predictable endpoints
+- **Benefit**: Easy integration with frontend applications
+- **Trade-off**: Multiple HTTP requests vs. GraphQL single endpoint
+
+#### **5. Layered Architecture (Routes → Controllers → Services → Models)**
+- **Why**: Separation of concerns and maintainability
+- **Benefit**: Easy testing, debugging, and feature additions
+- **Trade-off**: More files and complexity vs. monolithic structure
+
+#### **6. Stock Threshold-Based Alerts**
+- **Why**: Proactive inventory management
+- **Benefit**: Prevents stockouts and improves planning
+- **Trade-off**: Additional computation vs. reactive management
+
+#### **7. Comprehensive Error Handling**
+- **Why**: Better debugging and user experience
+- **Benefit**: Clear error messages and proper HTTP status codes
+- **Trade-off**: More code complexity vs. generic error responses
+
+### Future Enhancement Considerations
+
+- **Authentication & Authorization**: JWT-based user management
+- **Caching Layer**: Redis for frequently accessed data
+- **Real-time Updates**: WebSocket implementation for live inventory updates
+- **Batch Operations**: Support for bulk stock updates
+- **Multi  
+
+## 🚀 Deployment
+
+### Production Considerations
+
+1. **Environment Variables**: Set production values for all required variables
+2. **Database**: Ensure MongoDB Atlas is configured for production load
+3. **Monitoring**: Implement logging and monitoring solutions
+4. **Rate Limiting**: Add rate limiting middleware
+5. **HTTPS**: Enable SSL/TLS in production
+6. **Error Logging**: Configure proper error tracking
+
+### Recommended Deployment Platforms
+
+- **Heroku**: Easy deployment with MongoDB Atlas integration
+- **AWS EC2/ECS**: Scalable cloud infrastructure  
+- **Digital Ocean**: Cost-effective VPS solution
+- **Vercel**: Serverless deployment option
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Development Guidelines
+
+- Follow TypeScript best practices
+- Write comprehensive tests for new features
+- Update documentation for any API changes
+- Follow the existing code style and structure
+- Ensure all tests pass before submitting PR
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Express.js community for the robust framework
+- MongoDB team for the excellent database solution
+- TypeScript team for enhanced JavaScript development
+- Jest community for the testing framework
 
