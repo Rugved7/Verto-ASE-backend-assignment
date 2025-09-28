@@ -99,3 +99,14 @@ export const deleteProduct = async (req: Request, res: Response) : Promise<void>
     }
 }
 
+// Low Stock Threshold feature
+export const getLowStockProducts = async (req: Request, res:Response) : Promise<void> => {
+    try {
+        const lowStockProducts = await Product.find(
+            {stock_quantity: {$lt: '$low_stock_threshold'}
+        })
+        res.status(200).json(lowStockProducts)
+    } catch (error) {
+        res.status(500).json({error: "Failed to fetch low stock products"})
+    }
+}
