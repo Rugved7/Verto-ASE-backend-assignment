@@ -20,7 +20,6 @@ A **production-ready**, scalable backend API for comprehensive inventory managem
 - [API Endpoints](#-api-endpoints)
 - [Data Models](#-data-models)
 - [Testing](#-testing)
-- [Project Structure](#-project-structure)
 - [Environment Variables](#-environment-variables)
 - [Security Features](#-security-features)
 - [Contributing](#-contributing)
@@ -269,42 +268,6 @@ The test suite covers:
 - ✅ Low stock detection
 - ✅ Edge cases and boundary conditions
 
-## 📁 Project Structure
-
-```
-inventory-management-api/
-├── src/
-│   ├── config/             # Configuration files
-│   │   ├── database.ts     # MongoDB connection
-│   │   └── environment.ts  # Environment variables
-│   ├── controllers/        # Request handlers
-│   │   ├── productController.ts
-│   │   └── stockController.ts
-│   ├── models/            # Database schemas
-│   │   ├── Product.ts
-│   │   └── AuditLog.ts
-│   ├── routes/            # API route definitions
-│   │   ├── productRoutes.ts
-│   │   └── stockRoutes.ts
-│   ├── services/          # Business logic layer
-│   │   ├── productService.ts
-│   │   ├── stockService.ts
-│   │   └── auditService.ts
-│   ├── middleware/        # Custom middleware
-│   │   ├── validation.ts
-│   │   └── errorHandler.ts
-│   ├── utils/            # Utility functions
-│   │   └── logger.ts
-│   └── server.ts         # Application entry point
-├── tests/                # Test files
-│   ├── integration/      # Integration tests
-│   └── unit/            # Unit tests
-├── .env                 # Environment variables
-├── .gitignore          # Git ignore file
-├── package.json        # Dependencies and scripts
-├── tsconfig.json       # TypeScript configuration
-└── README.md          # This file
-```
 
 ## 🌍 Environment Variables
 
