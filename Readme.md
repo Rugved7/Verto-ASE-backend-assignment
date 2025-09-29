@@ -1,4 +1,5 @@
-# Inventory Management System API
+# Inventory Management System API 
+# Loom Link Attached : https://www.loom.com/share/c4e3a2369f2c4f05bafc0c21d7896daa?sid=96439470-796d-4306-8092-282e0e6099d6 
 
 ![Node.js](https://img.shields.io/badge/Node.js-16+-green.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-4.0+-blue.svg)
